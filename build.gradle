@@ -1,0 +1,49 @@
+task serveTea {
+	dependsOn = ["getKettle", "buildAFire", "placeKettleOnFire", "putMilk", "putTeaLeaves", "brewTea"]
+	doLast {
+		println "Tea is served!"
+	}
+}
+
+task getKettle {
+	doLast {
+		println "Get a nice tea kettle."
+	}
+}
+
+task buildAFire {
+	mustRunAfter "getKettle"
+	doLast {
+		println "Make a fire. Keep it at medium temperatur. "
+	}
+}
+
+task placeKettleOnFire {
+	dependsOn "buildAFire"
+	doLast {
+		println "Place the kettle on fire."
+	}
+}
+
+task putMilk {
+	dependsOn "placeKettleOnFire"
+	doLast {
+		println "Put milk."
+	}
+}
+
+task putTeaLeaves {
+	mustRunAfter "putMilk"
+	finalizedBy "brewTea"
+	dependsOn "placeKettleOnFire"
+	doLast {
+		println "Put tea leaves."
+	}
+}
+
+task brewTea {
+	dependsOn "putTeaLeaves"
+	doLast {
+		println "Brew the tea for 10 min."
+	}
+}
